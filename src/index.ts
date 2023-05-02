@@ -8,7 +8,7 @@ camera.position.z = 2
 
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
-document.body.appendChild(renderer.domElement)
+window.document.getElementById('root')?.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement)
 
