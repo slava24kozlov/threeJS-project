@@ -14,9 +14,10 @@ const controls = new OrbitControls(camera, renderer.domElement)
 
 const geometry = new THREE.BoxGeometry()
 const material = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
-    wireframe: true,
+    color: "white",
+    wireframe: false,
 })
+// const texture = new THREE.TextureLoader().load( "assets/fox.png" );
 
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
@@ -32,8 +33,8 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame(animate)
 
-    cube.rotation.x += 0.01
-    cube.rotation.y += 0.01
+    // cube.rotation.x += 0.01
+    // cube.rotation.y += 0.01
 
     controls.update()
 

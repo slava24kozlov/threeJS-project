@@ -23,6 +23,7 @@
     "@types/node": "^18.11.9",
     "@types/three": "^0.150.1",
     "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.1",
     "three": "^0.151.3",
     "ts-loader": "^9.4.1",
