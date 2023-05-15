@@ -1,32 +1,50 @@
-import { BoxGeometry, Mesh, MeshBasicMaterial, PerspectiveCamera, Scene, WebGLRenderer } from 'three'
+import {
+    BoxGeometry,
+    Mesh,
+    MeshBasicMaterial,
+    PerspectiveCamera, RepeatWrapping,
+    Scene,
+    Texture,
+    TextureLoader,
+    WebGLRenderer,
+} from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export class TheRenderer extends WebGLRenderer {
-    private readonly scene: Scene
+    private readonly scene: Scene;
 
-    private readonly camera: PerspectiveCamera
+    private readonly camera: PerspectiveCamera;
 
-    private controls: OrbitControls
+    private controls: OrbitControls;
 
-    private readonly cube: Mesh
+    private readonly cubeArray: Array<Mesh> = [];
+
+    private readonly textureArray: Array<Texture> = [];
 
     constructor() {
         super()
+        const loader = new TextureLoader();
+
+        this.textureArray.push(loader.load('./assets/imageOne.jpg'));
+        this.textureArray.push(loader.load('./assets/imageTwo.jpg'));
+        this.textureArray.push(loader.load('./assets/imageThree.jpg'));
+        this.textureArray.push(loader.load('./assets/imageThree.jpg'));
+        this.textureArray.push(loader.load('./assets/imageThree.jpg'));
+
         this.setSize(window.innerWidth, window.innerHeight)
 
         this.scene = new Scene()
 
         this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-        this.camera.position.z = 2;
+        this.camera.position.z = 3;
 
         this.controls = new OrbitControls(this.camera, this.domElement)
 
-        this.cube = new Mesh(new BoxGeometry(), new MeshBasicMaterial({
-            color: 'white',
-            wireframe: false,
-        }))
-
-        this.scene.add(this.cube)
+        this.textureArray.forEach((texture, index) => {
+            this.cubeArray.push(new Mesh(new BoxGeometry(), new MeshBasicMaterial({map: texture})));
+            this.cubeArray[index].position.x+=index;
+            this.scene.add(this.cubeArray[index]);
+        })
     }
 
     public onWindowResize = () => {
@@ -39,11 +57,13 @@ export class TheRenderer extends WebGLRenderer {
     public updateAnimation = () => {
         requestAnimationFrame(this.updateAnimation)
 
-        this.cube.rotation.x += 0.01
-        this.cube.rotation.y += 0.01
+        this.cubeArray.forEach((cube, index) => {
+            cube.rotation.x += 0.01 * index;
+            cube.rotation.y += 0.01 * index;
+        })
 
-        this.controls.update()
+        this.controls.update();
 
-        this.render(this.scene, this.camera)
+        this.render(this.scene, this.camera);
     }
 }
