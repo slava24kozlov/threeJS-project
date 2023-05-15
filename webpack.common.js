@@ -29,7 +29,7 @@ module.exports = {
         }),
     ],
     module: {
-        rules:  [
+        rules: [
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
@@ -39,8 +39,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            three: path.resolve('./node_modules/three')
+            three: path.resolve('./node_modules/three'),
         },
         extensions: ['.tsx', '.ts', '.js'],
-    }
-};
+    },
+}
